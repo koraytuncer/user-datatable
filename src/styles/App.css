@@ -35,3 +35,9 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600; 
 }
+
+:root {
+    --primary-color: #2940D3;
+    --secondary-color: #D4DBFC;
+    --tertiary-color: #82868C;
+}

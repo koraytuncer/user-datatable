@@ -1,0 +1,59 @@
+.userIconBox {
+    background-color: #D4DBFC;
+    border-radius: 8px;
+    padding: 10px 0px 10px 10px;
+    display: flex;
+    flex-direction: row;
+    margin-right: 12px;
+    height: 40px;
+    width: 40px;
+}
+
+.userTypography {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.userList {
+    display: flex;
+    padding-bottom: 0px !important;
+    margin-bottom: -3px !important;
+}
+
+.userListItem {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #82868C;
+    padding-bottom: 25px !important;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+}
+
+.userListItemActive {
+    color: var(--primary-color) !important;
+    border-bottom: 3px solid var(--primary-color) !important;
+}
+
+.userListItemInactive {
+    border-bottom: 3px solid transparent;
+}
+
+.userDivider {
+    border-bottom-width: 3px !important;
+    margin-top: 1px !important;
+}
+.userAddButton{
+    width: 156px;
+    height: 40px;
+    padding: 12px 20px 12px 15px;
+    background-color: var(--primary-color) !important;
+}
+.userAddButton .userAddButtonText{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color:#ffffff;
+    text-transform: none;
+}

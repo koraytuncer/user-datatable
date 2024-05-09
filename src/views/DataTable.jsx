@@ -1,10 +1,10 @@
 import React from 'react'
-import DataTableFilters from '../components/DataTable/DataTableFilters'
+import DataTableFilter from '../components/DataTable/DataTableFilter'
 
 const DataTable = () => {
     return (
         <React.Fragment>
-            <DataTableFilters />
+            <DataTableFilter />
         </React.Fragment>
     )
 }
