@@ -41,3 +41,7 @@ body {
     --secondary-color: #D4DBFC;
     --tertiary-color: #82868C;
 }
+
+.Mui-checked {
+    color: var(--primary-color) !important
+}

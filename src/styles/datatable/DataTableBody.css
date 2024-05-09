@@ -1,0 +1,15 @@
+.MuiTableCell-body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px !important;
+  color: #3a3c40 !important;
+}
+
+.actionIcon {
+  cursor: pointer;
+  color: #82868c;
+  margin-right: 2px;
+  font-size: 24px !important;
+}
+.actionIcon:hover {
+  color: #6f7278;
+}
