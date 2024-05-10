@@ -1,4 +1,4 @@
-.MuiTableCell-head {
+.datatableCell {
     background-color: #F5F5F7 !important;
     color:#3A3C40 !important;
     padding: 2px 16px !important;
@@ -8,6 +8,9 @@
     border: none !important;
   }
 
+  .datatableRow{
+    border: none !important;
+  }
   .checkBox{
     color: #82868C !important;
   }
