@@ -2,8 +2,12 @@
     background-color: #F5F5F7 !important;
     color:#3A3C40 !important;
     padding: 2px 16px !important;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif !important;
     font-size: 12px !important;
     font-weight: 600 !important;
     border: none !important;
+  }
+
+  .checkBox{
+    color: #82868C !important;
   }

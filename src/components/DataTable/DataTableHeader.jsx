@@ -16,7 +16,7 @@ const DataTableHeader = () => {
       <TableHead>
         <TableRow>
           <TableCell padding="checkbox">
-            <Checkbox className="checkBox"/>
+            <Checkbox className="checkBox" />
           </TableCell>
           {headerItems.map(({ label, width }) => (
             <TableCell key={label} align="left" sx={{ width: width }}>

@@ -12,7 +12,7 @@ const DataTableBody = () => {
         <TableCell align="left">
           <Checkbox className="checkBox" />
         </TableCell>
-        <TableCell align="left" sx={{fontWeight:600}}>
+        <TableCell align="left">
         <Avatar sx={{ height: 42, width:42 }} variant="rounded">
       </Avatar>
         </TableCell>
