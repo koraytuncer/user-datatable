@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import {fetchData} from '../services/DataService';
+import { fetchData } from '../services/DataService';
 
 
 const UsersContext = createContext();
@@ -7,8 +7,18 @@ const UsersContext = createContext();
 export const useUsers = () => useContext(UsersContext);
 
 export const UsersProvider = ({ children }) => {
+
+    //Tüm kullanıcıları tutacak state
     const [users, setUsers] = useState([]);
+
+    //Seçilen kullanıcıları tutacak state
     const [selectedUsers, setSelectedUsers] = useState([]);
+
+    //Filtrelenmiş kullanıcıları tutacak state
+    const [filteredUsers, setFilteredUsers] = useState([]);
+
+    //Arama sorgusunu tutacak state
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         const loadUsers = async () => {
@@ -23,7 +33,9 @@ export const UsersProvider = ({ children }) => {
     }, []);
 
     return (
-        <UsersContext.Provider value={{ users, setUsers,selectedUsers, setSelectedUsers }}>
+        <UsersContext.Provider value={
+            { users, setUsers, filteredUsers, setFilteredUsers, selectedUsers, setSelectedUsers,searchQuery, setSearchQuery }
+            }>
             {children}
         </UsersContext.Provider>
     );

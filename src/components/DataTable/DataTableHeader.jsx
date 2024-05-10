@@ -1,22 +1,44 @@
 import { useUsers } from "../../contexts/UsersContext";
-import { 
-  TableHead, 
-  TableRow, 
-  TableCell, 
-  Checkbox, 
-  Typography,
+import {
+  TableHead,
+  TableRow,
+  TableCell,
+  Checkbox,
   Box,
   TextField,
-  InputAdornment
-  } from "@mui/material";
+  InputAdornment,
+  Badge,
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CgSearch } from "react-icons/cg";
 import "../../styles/datatable/DataTableHeader.css";
 
 const DataTableHeader = () => {
-
   //Context'ten gelen verileri almak için useUsers hook'unu kullanıyoruz
-  const { users, selectedUsers, setSelectedUsers } = useUsers();
+  const { 
+    users, 
+    selectedUsers, 
+    setSelectedUsers, 
+    setFilteredUsers,
+    searchQuery, 
+    setSearchQuery } = useUsers();
+
+
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+    if (value) {
+      const lowercasedFilter = value.toLowerCase();
+      const filteredData = users.filter(
+        (user) =>
+          user.username.toLowerCase().includes(lowercasedFilter) ||
+          user.email.toLowerCase().includes(lowercasedFilter)
+      );
+      setFilteredUsers(filteredData); // Arama kutusuna girilen değere göre kullanıcıları filtrele
+    } else {
+      setFilteredUsers([]); // Arama kutusu boşsa filteredUsers'ı boş yap
+    }
+  };
 
   const toggleSelectAll = () => {
     if (selectedUsers.length === users.length) {
@@ -25,7 +47,6 @@ const DataTableHeader = () => {
       setSelectedUsers(users); // Tüm kullanıcıları seç
     }
   };
-  
 
   const headerItems = [
     { label: "Avatar", width: "50px" },
@@ -42,40 +63,55 @@ const DataTableHeader = () => {
           <TableCell
             align="left"
             colSpan={5}
-            sx={{ paddingLeft: 3, border: "none" }}>
-          <TextField
-            variant="standard"
-            placeholder="Search"
-            fullWidth
-            InputProps={{
-              className: 'searchInput',
-              disableUnderline: true, 
-              startAdornment: (
-                <InputAdornment position="start">
-                  <CgSearch size={30} color="#82868C" />
-                </InputAdornment>
-              )
-            }}
-          />
+            sx={{ paddingLeft: 3, border: "none" }}
+          >
+            <TextField
+              variant="standard"
+              placeholder="Search"
+              fullWidth
+              value={searchQuery}
+              onChange={handleSearchChange}
+              InputProps={{
+                className: "searchInput",
+                disableUnderline: true,
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CgSearch size={30} color="#82868C" />
+                  </InputAdornment>
+                ),
+              }}
+            />
           </TableCell>
           <TableCell
             align="right"
             colSpan={3}
-            sx={{ paddingRight: 3, border: "none" }}>
-            <Box sx={{display:"flex",justifyContent:"end",alignItems:"center"}}>
-            {selectedUsers.length > 0 && <Typography className="smallFont">{selectedUsers.length} selected</Typography>}
-            <DeleteIcon className="deleteIcon" sx={{ color: selectedUsers.length > 0 ? "red" : "#82868c" }} />
-
+            sx={{ paddingRight: 3, border: "none" }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "end",
+                alignItems: "center",
+              }}
+            >
+              <Badge color="error" badgeContent={selectedUsers.length}>
+                <DeleteIcon
+                  className="deleteIcon"
+                  sx={{ color: selectedUsers.length > 0 ? "red" : "#82868c" }}
+                />
+              </Badge>
             </Box>
           </TableCell>
         </TableRow>
         <TableRow sx={{ border: "none" }}>
           <TableCell padding="checkbox" className="datatableCell">
-            <Checkbox 
-            className="checkBox"  
-            checked={selectedUsers.length === users.length}
-            indeterminate={selectedUsers.length > 0 && selectedUsers.length < users.length}
-            onChange={toggleSelectAll}
+            <Checkbox
+              className="checkBox"
+              checked={selectedUsers.length === users.length}
+              indeterminate={
+                selectedUsers.length > 0 && selectedUsers.length < users.length
+              }
+              onChange={toggleSelectAll}
             />
           </TableCell>
           {headerItems.map(({ label, width }) => (
@@ -83,7 +119,8 @@ const DataTableHeader = () => {
               key={label}
               align="left"
               sx={{ width: width }}
-              className="datatableCell">
+              className="datatableCell"
+            >
               {label}
             </TableCell>
           ))}
