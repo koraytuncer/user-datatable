@@ -8,6 +8,7 @@ export const useUsers = () => useContext(UsersContext);
 
 export const UsersProvider = ({ children }) => {
     const [users, setUsers] = useState([]);
+    const [selectedUsers, setSelectedUsers] = useState([]);
 
     useEffect(() => {
         const loadUsers = async () => {
@@ -22,7 +23,7 @@ export const UsersProvider = ({ children }) => {
     }, []);
 
     return (
-        <UsersContext.Provider value={{ users, setUsers }}>
+        <UsersContext.Provider value={{ users, setUsers,selectedUsers, setSelectedUsers }}>
             {children}
         </UsersContext.Provider>
     );

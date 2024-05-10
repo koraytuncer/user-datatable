@@ -1,4 +1,3 @@
-import React from "react";
 import { useUsers } from "../../contexts/UsersContext";
 import {
   TableBody,
@@ -12,14 +11,25 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "../../styles/datatable/DataTableBody.css";
 
 const DataTableBody = () => {
-  const { users } = useUsers();
+  const { users,selectedUsers,setSelectedUsers } = useUsers();
 
+  const handleCheckboxClick = (user) => {
+    setSelectedUsers((prevUsers) =>
+      selectedUsers.some((u) => u.id === user.id)
+        ? prevUsers.filter((u) => u.id !== user.id)  // Eğer kullanıcı zaten seçiliyse, seçimini kaldır
+        : [...prevUsers, user]  // Eğer kullanıcı henüz seçilmemişse, diziye ekle
+    );
+  };
   return (
     <TableBody>
       {users.map((user) => (
         <TableRow key={user.id}>
           <TableCell align="left" component="th" scope="user">
-            <Checkbox className="checkBox" />
+            <Checkbox
+              className="checkBox"
+              checked={selectedUsers.some((u) => u.id === user.id)}
+              onClick={() => handleCheckboxClick(user)}
+            />
           </TableCell>
           <TableCell align="left">
             <Avatar

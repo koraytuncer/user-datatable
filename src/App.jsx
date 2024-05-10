@@ -5,7 +5,6 @@ import DataTable from './views/DataTable';
 
 
 const App = () => {
-
   return (
     <>
       <CssBaseline />
