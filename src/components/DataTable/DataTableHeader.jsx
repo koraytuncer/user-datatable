@@ -1,4 +1,4 @@
-import { TableHead, TableRow, TableCell, Checkbox, Typography,Box } from "@mui/material";
+import { TableHead, TableRow, TableCell, Checkbox, Typography,Box,TextField,InputAdornment  } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CgSearch } from "react-icons/cg";
 import "../../styles/datatable/DataTableHeader.css";
@@ -19,18 +19,29 @@ const DataTableHeader = () => {
           <TableCell
             align="left"
             colSpan={5}
-            sx={{ paddingLeft: 3, border: "none" }}
-          >
-            <CgSearch size={32} color="#82868C" />
+            sx={{ paddingLeft: 3, border: "none" }}>
+          <TextField
+            variant="standard"
+            placeholder="Search"
+            fullWidth
+            InputProps={{
+              className: 'smallFont',
+              disableUnderline: true, 
+              startAdornment: (
+                <InputAdornment position="start">
+                  <CgSearch size={30} color="#82868C" />
+                </InputAdornment>
+              )
+            }}
+          />
           </TableCell>
           <TableCell
             align="right"
             colSpan={3}
-            sx={{ paddingRight: 4, border: "none" }}
-          >
+            sx={{ paddingRight: 4, border: "none" }}>
             <Box sx={{display:"flex",justifyContent:"end",alignItems:"center"}}>
             <DeleteIcon className="actionIcon" />
-           <Typography className="actionText" sx={{fontSize:12,fontWeight:600, fontFamily:"Montserrat"}}>Delete</Typography>
+           <Typography  className="smallFont">Delete</Typography>
             </Box>
           </TableCell>
         </TableRow>
@@ -43,8 +54,7 @@ const DataTableHeader = () => {
               key={label}
               align="left"
               sx={{ width: width }}
-              className="datatableCell"
-            >
+              className="datatableCell">
               {label}
             </TableCell>
           ))}

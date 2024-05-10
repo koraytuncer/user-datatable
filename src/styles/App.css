@@ -45,3 +45,9 @@ body {
 .Mui-checked {
     color: var(--primary-color) !important
 }
+
+.smallFont{
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
