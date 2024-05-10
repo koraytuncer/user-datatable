@@ -8,8 +8,8 @@
 .actionIcon {
   cursor: pointer;
   color: #82868c;
-  margin-right: 2px;
-  font-size: 24px !important;
+  margin-right: 4px;
+  font-size: 32px !important;
 }
 .actionIcon:hover {
   color: #6f7278;

@@ -14,3 +14,25 @@
   .checkBox{
     color: #82868C !important;
   }
+  .searchInput{
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #3A3C40 !important;
+    font-family: 'Montserrat', sans-serif !important;
+
+  }
+  .searchInput .MuiInputBase-input::placeholder {
+    font-size: 12px; 
+    color: #3A3C40 !important;
+  }
+
+  .deleteIcon {
+    cursor: pointer;
+    color: #82868c;
+    margin-right: 2px;
+    font-size: 32px !important;
+  }
+  .deleteIcon:hover {
+    color: #6f7278;
+  }
+  

@@ -1,4 +1,4 @@
-import { TableHead, TableRow, TableCell, Checkbox, Typography,Box,TextField,InputAdornment  } from "@mui/material";
+import { TableHead, TableRow, TableCell, Checkbox, Typography,Box,TextField,InputAdornment,Button  } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CgSearch } from "react-icons/cg";
 import "../../styles/datatable/DataTableHeader.css";
@@ -25,7 +25,7 @@ const DataTableHeader = () => {
             placeholder="Search"
             fullWidth
             InputProps={{
-              className: 'smallFont',
+              className: 'searchInput',
               disableUnderline: true, 
               startAdornment: (
                 <InputAdornment position="start">
@@ -38,9 +38,9 @@ const DataTableHeader = () => {
           <TableCell
             align="right"
             colSpan={3}
-            sx={{ paddingRight: 4, border: "none" }}>
+            sx={{ paddingRight: 5, border: "none" }}>
             <Box sx={{display:"flex",justifyContent:"end",alignItems:"center"}}>
-            <DeleteIcon className="actionIcon" />
+            <DeleteIcon className="deleteIcon" />
            <Typography  className="smallFont">Delete</Typography>
             </Box>
           </TableCell>
