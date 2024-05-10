@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {Grid,Box,Typography,List,ListItem,Divider,Button} from "@mui/material";
 import { FaUsers } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
@@ -19,7 +19,7 @@ const DataTableFilters = () => {
     "Subscriber",
   ];
   return (
-    <React.Fragment>
+    <>
       <Grid
         container
         spacing={5}
@@ -57,7 +57,7 @@ const DataTableFilters = () => {
         </Grid>
       </Grid>
       <Divider className="userDivider" />
-    </React.Fragment>
+    </>
   );
 };
 
