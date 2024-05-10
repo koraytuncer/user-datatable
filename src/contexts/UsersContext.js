@@ -20,6 +20,9 @@ export const UsersProvider = ({ children }) => {
     //Arama sorgusunu tutacak state
     const [searchQuery, setSearchQuery] = useState("");
 
+    // Seçilen Role işlemi için kullanılacak state
+    const [filterRole, setFilterRole] = useState("All Users");
+
     useEffect(() => {
         const loadUsers = async () => {
             try {
@@ -34,8 +37,8 @@ export const UsersProvider = ({ children }) => {
 
     return (
         <UsersContext.Provider value={
-            { users, setUsers, filteredUsers, setFilteredUsers, selectedUsers, setSelectedUsers,searchQuery, setSearchQuery }
-            }>
+            { users, setUsers, filteredUsers, setFilteredUsers, selectedUsers, setSelectedUsers, searchQuery, setSearchQuery, filterRole, setFilterRole }
+        }>
             {children}
         </UsersContext.Provider>
     );

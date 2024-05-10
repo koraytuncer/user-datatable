@@ -30,7 +30,7 @@ const DataTableBody = () => {
   };
 
   // Arama sorgusu girilmişse filtrelenmiş veriyi, girilmemişse tüm veriyi göster
-  const dataToShow = searchQuery.length > 0 ? filteredUsers : users;
+  const dataToShow = searchQuery.length || filteredUsers.length > 0 ? filteredUsers : users;
 
   return (
     <TableBody>

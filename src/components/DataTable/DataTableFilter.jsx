@@ -1,49 +1,55 @@
 import { useState } from "react";
+import { useUsers } from "../../contexts/UsersContext";
 import {Grid,Box,Typography,List,ListItem,Divider,Button} from "@mui/material";
 import { FaUsers } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
 import "../../styles/datatable/DataTableFilter.css";
 
 const DataTableFilters = () => {
+  const { users,setFilteredUsers, setFilterRole } = useUsers();
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleClick = (index) => {
-    setActiveIndex(index);
-  };
 
-  const filters = [
+
+  const handleClick = (index, item) => {
+    setActiveIndex(index);
+    let filteredData = [];
+    if (item === "All Users") {
+      filteredData = [...users];
+    } else {
+      filteredData = users.filter(user => user.roles === item);
+      setFilterRole(item)
+    }
+    setFilteredUsers(filteredData);
+  };
+  
+  const filterName = [
     "All Users",
     "Contributor",
     "Author",
     "Administrator",
     "Subscriber",
   ];
+
   return (
     <>
-      <Grid
-        container
-        spacing={5}
-        gap={12}
-        sx={{ padding: "0px 18px 0px 18px" }}>
+      <Grid container spacing={5} gap={12} sx={{ padding: "0px 18px 0px 18px" }}>
         <Grid item xs sx={{ display: "flex", alignItems: "center" }}>
           <Box className="userIconBox">
             <FaUsers size={20} color={"var(--primary-color)"} />
           </Box>
-
           <Typography className="userTypography">Users</Typography>
         </Grid>
         <Grid item xs={6}>
           <List className="userList">
-            {filters.map((filter, index) => (
+            {filterName.map((item, index) => (
               <ListItem
                 key={index}
-                onClick={() => handleClick(index)}
+                onClick={() => handleClick(index, item)}
                 className={`userListItem ${
-                  index === activeIndex
-                    ? "userListItemActive"
-                    : "userListItemInactive"
+                  index === activeIndex ? "userListItemActive" : "userListItemInactive"
                 }`}>
-                {filter}
+                {item}
               </ListItem>
             ))}
           </List>

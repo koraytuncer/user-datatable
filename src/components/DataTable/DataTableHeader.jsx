@@ -19,34 +19,45 @@ const DataTableHeader = () => {
     users, 
     selectedUsers, 
     setSelectedUsers, 
+    filteredUsers,
     setFilteredUsers,
     searchQuery, 
-    setSearchQuery } = useUsers();
+    setSearchQuery,
+    filterRole 
+  } = useUsers();
 
 
-  const handleSearchChange = (event) => {
-    const value = event.target.value;
-    setSearchQuery(value);
-    if (value) {
-      const lowercasedFilter = value.toLowerCase();
-      const filteredData = users.filter(
-        (user) =>
-          user.username.toLowerCase().includes(lowercasedFilter) ||
-          user.email.toLowerCase().includes(lowercasedFilter)
-      );
-      setFilteredUsers(filteredData); // Arama kutusuna girilen değere göre kullanıcıları filtrele
-    } else {
-      setFilteredUsers([]); // Arama kutusu boşsa filteredUsers'ı boş yap
-    }
-  };
+    const handleSearchChange = (event) => {
+      const value = event.target.value.trim();
+      setSearchQuery(value);
+    
+      if (value) {
+        const lowercasedFilter = value.toLowerCase();
+        const activeList = filteredUsers.length > 0 ? filteredUsers : users;  // Aktif liste hangisiyse onu kullan
+        const searchFilteredData = activeList.filter(
+          user => user.username.toLowerCase().includes(lowercasedFilter) ||
+                  user.email.toLowerCase().includes(lowercasedFilter)
+        );
+        setFilteredUsers(searchFilteredData);  // Arama sonucuna göre filtrele
+      } else {
+        // Arama kutusu boşaltıldığında ve bir filtre uygulanmışsa (filtrelenmiş kullanıcılar varsa)
+        if (filteredUsers.length > 0 && searchQuery) {
+          setFilteredUsers(users.filter(user => user.roles === filterRole)); // Önceki filtre durumuna geri dön
+        }
+      }
+    };
+    
+    
 
   const toggleSelectAll = () => {
-    if (selectedUsers.length === users.length) {
-      setSelectedUsers([]); // Tüm seçimleri kaldır
+    const currentList = filteredUsers.length > 0 ? filteredUsers : users; // Arama yapıldıysa filteredUsers, yoksa users kullanılacak
+    if (selectedUsers.length === currentList.length) {
+      setSelectedUsers([]); // Eğer şu anki liste tamamen seçiliyse, tüm seçimleri kaldır
     } else {
-      setSelectedUsers(users); // Tüm kullanıcıları seç
+      setSelectedUsers(currentList); // Eğer tamamen seçili değilse, şu anki listeyi tamamen seç
     }
   };
+  
 
   const headerItems = [
     { label: "Avatar", width: "50px" },
@@ -105,11 +116,11 @@ const DataTableHeader = () => {
         </TableRow>
         <TableRow sx={{ border: "none" }}>
           <TableCell padding="checkbox" className="datatableCell">
-            <Checkbox
+          <Checkbox
               className="checkBox"
-              checked={selectedUsers.length === users.length}
+              checked={selectedUsers.length === (searchQuery.length > 0 ? filteredUsers.length : users.length)}
               indeterminate={
-                selectedUsers.length > 0 && selectedUsers.length < users.length
+                selectedUsers.length > 0 && selectedUsers.length < (searchQuery.length > 0 ? filteredUsers.length : users.length)
               }
               onChange={toggleSelectAll}
             />
