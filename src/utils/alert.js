@@ -14,17 +14,17 @@ export const confirmDelete = (userId, onDeleteConfirm) => {
     confirmButtonText: 'Yes, delete it!',
     cancelButtonText: 'No, cancel!',
     customClass: {
-      popup: 'custom-swal-popup', // CSS sınıfı tanımı
+      popup: 'custom-swal-popup',
       title: 'custom-swal-title',
       content: 'custom-swal-content'
     }
   }).then((result) => {
     if (result.isConfirmed) {
       onDeleteConfirm(userId); // Kullanıcı silme işlemini gerçekleştir
-      toast.success("User deleted successfully!"); // Başarılı toast mesajı
+      toast.success("User deleted successfully!",{theme: "dark"});
+
     } else if (result.isDismissed) {
-      // İptal durumu için isDismissed kullanıldı
-      toast.warning("User delete cancelled."); // İptal toast mesajı
+      toast.warning("User delete cancelled.",{theme: "dark"});
     }
   });
 }
