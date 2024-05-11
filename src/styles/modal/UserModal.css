@@ -21,7 +21,7 @@
     border: 2px solid rgba(227, 230, 235, 1);
     outline: none !important;
     opacity: 0px;
-    margin-bottom: 30px;
+    margin-top: 30px;
 }
 .MuiInputBase-input::placeholder{
     font-family: 'Montserrat', sans-serif !important;
@@ -49,7 +49,7 @@
     border: 2px solid rgba(227, 230, 235, 1);
     outline: none !important;
     opacity: 0px;
-    margin-bottom: 30px;
+    margin-top: 30px;
 }
 .menuItem{
     width: 292px;
