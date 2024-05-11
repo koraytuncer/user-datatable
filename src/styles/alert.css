@@ -1,0 +1,11 @@
+.custom-swal-popup {
+    background-color: #303030; /* Kutunun arka plan rengi */
+    width: 350px; /* Kutunun genişliği */
+  }
+  
+  .custom-swal-title {
+    color: #ffffff; /* Başlık rengi */
+  }
+  .swal2-html-container {
+    color: #ffffff !important; /* İçerik metni rengi */
+  }
