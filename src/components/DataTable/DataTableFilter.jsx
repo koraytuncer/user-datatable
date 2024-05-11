@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useUsersData } from "../../contexts/users/UsersDataContext";
 import { useUserSelection } from "../../contexts/users/UserSelectionContext";
+import { useModal } from '../../contexts/modal/ModalContext';
 import {Grid,Box,Typography,List,ListItem,Divider,Button} from "@mui/material";
 import { FaUsers } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
@@ -11,7 +12,7 @@ const DataTableFilters = () => {
   const {setFilterRole } = useUserSelection();
   const [activeIndex, setActiveIndex] = useState(0);
 
-
+  const { handleOpen } = useModal();
 
   const handleClick = (index, item) => {
     setActiveIndex(index);
@@ -59,6 +60,7 @@ const DataTableFilters = () => {
         <Grid item xs sx={{ display: "flex", alignItems: "center" }}>
           <Button
             className="userAddButton"
+            onClick={handleOpen}
             startIcon={<MdAddCircle size={15} color={"#FFFFFF"} />}>
             <Typography className="userAddButtonText">Add New User</Typography>
           </Button>

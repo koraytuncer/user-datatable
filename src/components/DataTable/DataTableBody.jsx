@@ -13,11 +13,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { confirmDelete } from "../../utils/alert";
 import { deleteData } from "../../services/DataService";
+import { useModal } from '../../contexts/modal/ModalContext';
+import UserModal from "../Modal/UserModal";
 import "../../styles/datatable/DataTableBody.css";
 
 const DataTableBody = () => {
   const { users, setUsers, filteredUsers, searchQuery } = useUsersData();
   const { selectedUsers, setSelectedUsers } = useUserSelection();
+
+  const { open,handleOpen, handleClose } = useModal();
 
   const handleCheckboxClick = (user) => {
     setSelectedUsers(
@@ -46,6 +50,8 @@ const DataTableBody = () => {
     searchQuery.length || filteredUsers.length > 0 ? filteredUsers : users;
 
   return (
+    <>
+
     <TableBody>
       {dataToShow.length > 0 ? (
         dataToShow.map((user) => (
@@ -90,6 +96,8 @@ const DataTableBody = () => {
         </TableRow>
       )}
     </TableBody>
+    <UserModal open={open} handleClose={handleClose} />
+    </>
   );
 };
 
