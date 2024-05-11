@@ -11,10 +11,12 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { confirmDelete } from "../../utils/alert";
+import { deleteData } from "../../services/DataService";
 import "../../styles/datatable/DataTableBody.css";
 
 const DataTableBody = () => {
-  const { users, filteredUsers, searchQuery } = useUsersData();
+  const { users, setUsers, filteredUsers, searchQuery } = useUsersData();
   const { selectedUsers, setSelectedUsers } = useUserSelection();
 
   const handleCheckboxClick = (user) => {
@@ -24,6 +26,19 @@ const DataTableBody = () => {
           ? prevUsers.filter((u) => u.id !== user.id) // Eğer kullanıcı zaten seçiliyse, seçimini kaldır
           : [...prevUsers, user] // Eğer kullanıcı henüz seçilmemişse, diziye ekle
     );
+  };
+
+  // Kullanıcıyı silme işlemi
+  const handleDelete = (userId) => {
+    confirmDelete(userId, async () => {
+      try {
+        await deleteData(userId); // API üzerinden kullanıcı silme işlemi
+        const updatedUsers = users.filter((user) => user.id !== userId); // Silinen kullanıcıyı listeden kaldır
+        setUsers(updatedUsers); // State'i güncelle
+      } catch (error) {
+        console.error("Error deleting user:", error);
+      }
+    });
   };
 
   // Arama sorgusu girilmişse filtrelenmiş veriyi, girilmemişse tüm veriyi göster
@@ -55,7 +70,10 @@ const DataTableBody = () => {
             <TableCell align="left">{user.roles}</TableCell>
             <TableCell align="left">
               <EditIcon className="actionIcon" />
-              <DeleteIcon className="actionIcon" />
+              <DeleteIcon
+                className="actionIcon"
+                onClick={() => handleDelete(user.id)}
+              />
             </TableCell>
           </TableRow>
         ))
