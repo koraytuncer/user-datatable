@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { useUsers } from "../../contexts/UsersContext";
+import { useUsersData } from "../../contexts/users/UsersDataContext";
+import { useUserSelection } from "../../contexts/users/UserSelectionContext";
 import {Grid,Box,Typography,List,ListItem,Divider,Button} from "@mui/material";
 import { FaUsers } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
 import "../../styles/datatable/DataTableFilter.css";
 
 const DataTableFilters = () => {
-  const { users,setFilteredUsers, setFilterRole } = useUsers();
+  const { users, setFilteredUsers } = useUsersData();
+  const {setFilterRole } = useUserSelection();
   const [activeIndex, setActiveIndex] = useState(0);
 
 

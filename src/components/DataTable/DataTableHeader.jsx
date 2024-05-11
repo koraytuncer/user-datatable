@@ -1,4 +1,5 @@
-import { useUsers } from "../../contexts/UsersContext";
+import { useUsersData } from "../../contexts/users/UsersDataContext";
+import { useUserSelection } from "../../contexts/users/UserSelectionContext";
 import {
   TableHead,
   TableRow,
@@ -14,17 +15,9 @@ import { CgSearch } from "react-icons/cg";
 import "../../styles/datatable/DataTableHeader.css";
 
 const DataTableHeader = () => {
-  //Context'ten gelen verileri almak için useUsers hook'unu kullanıyoruz
-  const { 
-    users, 
-    selectedUsers, 
-    setSelectedUsers, 
-    filteredUsers,
-    setFilteredUsers,
-    searchQuery, 
-    setSearchQuery,
-    filterRole 
-  } = useUsers();
+  //Context'ten gelen verileri almak için kullanılır
+  const { users, filteredUsers, searchQuery,setSearchQuery,setFilteredUsers } = useUsersData();
+  const { selectedUsers, setSelectedUsers,filterRole } = useUserSelection();
 
 
     const handleSearchChange = (event) => {

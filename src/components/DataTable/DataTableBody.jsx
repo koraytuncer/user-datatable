@@ -1,36 +1,34 @@
-import React from 'react';
-import { useUsers } from "../../contexts/UsersContext";
+import React from "react";
+import { useUsersData } from "../../contexts/users/UsersDataContext";
+import { useUserSelection } from "../../contexts/users/UserSelectionContext";
 import {
   TableBody,
   TableRow,
   TableCell,
   Checkbox,
   Avatar,
-  Typography
+  Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "../../styles/datatable/DataTableBody.css";
 
 const DataTableBody = () => {
-  const { 
-    users,
-    selectedUsers,
-    setSelectedUsers,
-    filteredUsers,
-    searchQuery
-  } = useUsers();
+  const { users, filteredUsers, searchQuery } = useUsersData();
+  const { selectedUsers, setSelectedUsers } = useUserSelection();
 
   const handleCheckboxClick = (user) => {
-    setSelectedUsers((prevUsers) =>
-      selectedUsers.some((u) => u.id === user.id) // Kullanıcı zaten seçili mi?
-        ? prevUsers.filter((u) => u.id !== user.id)  // Eğer kullanıcı zaten seçiliyse, seçimini kaldır
-        : [...prevUsers, user]  // Eğer kullanıcı henüz seçilmemişse, diziye ekle
+    setSelectedUsers(
+      (prevUsers) =>
+        selectedUsers.some((u) => u.id === user.id) // Kullanıcı zaten seçili mi?
+          ? prevUsers.filter((u) => u.id !== user.id) // Eğer kullanıcı zaten seçiliyse, seçimini kaldır
+          : [...prevUsers, user] // Eğer kullanıcı henüz seçilmemişse, diziye ekle
     );
   };
 
   // Arama sorgusu girilmişse filtrelenmiş veriyi, girilmemişse tüm veriyi göster
-  const dataToShow = searchQuery.length || filteredUsers.length > 0 ? filteredUsers : users;
+  const dataToShow =
+    searchQuery.length || filteredUsers.length > 0 ? filteredUsers : users;
 
   return (
     <TableBody>
@@ -45,7 +43,11 @@ const DataTableBody = () => {
               />
             </TableCell>
             <TableCell align="left">
-              <Avatar sx={{ height: 42, width: 42 }} variant="rounded" src={user.avatar} />
+              <Avatar
+                sx={{ height: 42, width: 42 }}
+                variant="rounded"
+                src={user.avatar}
+              />
             </TableCell>
             <TableCell align="left">{user.name}</TableCell>
             <TableCell align="left">{user.username}</TableCell>
@@ -60,7 +62,10 @@ const DataTableBody = () => {
       ) : (
         <TableRow>
           <TableCell colSpan={7} align="center">
-            <Typography variant="subtitle1" style={{ marginTop: 16, marginBottom: 16 }}>
+            <Typography
+              variant="subtitle1"
+              style={{ marginTop: 16, marginBottom: 16 }}
+            >
               Kullanıcı bulunamamıştır.
             </Typography>
           </TableCell>
