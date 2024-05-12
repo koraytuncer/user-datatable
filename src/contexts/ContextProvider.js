@@ -1,6 +1,6 @@
 import React from 'react';
-import { UsersDataProvider } from './users/UsersDataContext';
-import { UserSelectionProvider } from './users/UserSelectionContext';
+import { UsersDataProvider } from './userdatatable/UsersDataContext';
+import { UserSelectionProvider } from './userdatatable/UserSelectionContext';
 import { ModalProvider } from './modal/ModalContext';
 
 const ContextProvider = ({ children }) => {

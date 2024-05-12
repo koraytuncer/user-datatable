@@ -1,5 +1,5 @@
-import { useUsersData } from "../../contexts/users/UsersDataContext";
-import { useUserSelection } from "../../contexts/users/UserSelectionContext";
+import { useUsersData } from "../../contexts/userdatatable/UsersDataContext";
+import { useUserSelection } from "../../contexts/userdatatable/UserSelectionContext";
 import { deleteData } from "../../services/DataService";
 import {
   TableHead,
@@ -25,6 +25,7 @@ const DataTableHeader = () => {
     searchQuery,
     setSearchQuery,
     setFilteredUsers,
+    setCurrentPage,
   } = useUsersData();
 
   const { selectedUsers, setSelectedUsers, filterRole } = useUserSelection();
@@ -48,6 +49,7 @@ const DataTableHeader = () => {
         setFilteredUsers(users.filter((user) => user.roles === filterRole)); // Önceki filtre durumuna geri dön
       }
     }
+    setCurrentPage(1); // Arama yapıldığında sayfayı 1 yap
   };
 
   const toggleSelectAll = () => {

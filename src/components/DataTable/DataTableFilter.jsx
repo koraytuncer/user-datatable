@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useUsersData } from "../../contexts/users/UsersDataContext";
-import { useUserSelection } from "../../contexts/users/UserSelectionContext";
+import { useUsersData } from "../../contexts/userdatatable/UsersDataContext";
+import { useUserSelection } from "../../contexts/userdatatable/UserSelectionContext";
 import { useModal } from "../../contexts/modal/ModalContext";
 import { toast } from "react-toastify";
 import {

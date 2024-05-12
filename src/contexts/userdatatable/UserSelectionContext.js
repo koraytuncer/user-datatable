@@ -8,10 +8,10 @@ export const UserSelectionProvider = ({ children }) => {
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [filterRole, setFilterRole] = useState("All Users");
 
+    const value={selectedUsers, setSelectedUsers, filterRole, setFilterRole}
+
     return (
-        <UserSelectionContext.Provider value={{
-            selectedUsers, setSelectedUsers, filterRole, setFilterRole
-        }}>
+        <UserSelectionContext.Provider value={value}>
             {children}
         </UserSelectionContext.Provider>
     );

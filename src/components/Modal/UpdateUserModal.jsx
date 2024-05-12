@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { updateData } from "../../services/DataService";
-import { useUsersData } from "../../contexts/users/UsersDataContext";
+import { useUsersData } from "../../contexts/userdatatable/UsersDataContext";
 import {
   Box,
   Modal,
@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import "../../styles/modal/EditUserModal.css";
+import "../../styles/modal/UpdateUserModal.css";
 
 import avatar1 from "../../assets/images/avatar/1.png";
 import avatar2 from "../../assets/images/avatar/2.png";
@@ -39,7 +39,7 @@ const validationSchema = yup.object({
   role: yup.string("Enter your role").required("role is required"),
 });
 
-export default function EditUserModal({ user, open, handleClose }) {
+export default function UpdateUserModal({ user, open, handleClose }) {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -91,7 +91,7 @@ export default function EditUserModal({ user, open, handleClose }) {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box className="EditUserModal">
+        <Box className="UpdateUserModal">
           <IconButton
             aria-label="close"
             onClick={formik.handleReset}

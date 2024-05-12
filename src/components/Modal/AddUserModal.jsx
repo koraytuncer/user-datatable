@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { postData } from "../../services/DataService";
-import { useUsersData } from "../../contexts/users/UsersDataContext";
+import { useUsersData } from "../../contexts/userdatatable/UsersDataContext";
 import {
   Box,
   Modal,
