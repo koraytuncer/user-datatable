@@ -24,7 +24,8 @@ const DataTableBody = () => {
     users,
     setUsers,
     filteredUsers,
-    searchQuery
+    searchQuery,
+    setFilteredUsers
   } = useUsersData();
 
   const { selectedUsers, setSelectedUsers } = useUserSelection();
@@ -43,18 +44,33 @@ const DataTableBody = () => {
     setSelectedUsers(newSelectedUsers);
   };
 
-  // Kullanıcıyı silme işlemi
-  const handleDelete = (userId) => {
-    confirmDelete(userId, async () => {
-      try {
-        await deleteData(userId); // API üzerinden kullanıcı silme işlemi
-        const updatedUsers = users.filter((user) => user.id !== userId); // Silinen kullanıcıyı listeden kaldır
-        setUsers(updatedUsers); // State'i güncelle
-      } catch (error) {
-        console.error("Error deleting user:", error);
+// Kullanıcıyı silme işlemi
+const handleDelete = (userId) => {
+  confirmDelete(userId, async () => {
+    try {
+      await deleteData(userId); // API üzerinden kullanıcı silme işlemi
+      const updatedUsers = users.filter((user) => user.id !== userId); // Silinen kullanıcıyı listeden kaldır
+      setUsers(updatedUsers); // Kullanıcı listesi state'ini güncelle
+      
+      // Eğer arama veya filtreleme sonucu kullanıcılar filtrelenmişse, bu filtreli listeyi de güncelle
+      let updatedFilteredUsers = filteredUsers;
+      if (filteredUsers.length > 0) {
+        updatedFilteredUsers = filteredUsers.filter((user) => user.id !== userId);
+        setFilteredUsers(updatedFilteredUsers);
       }
-    });
-  };
+
+      // currentPage'deki kullanıcıları tekrar hesapla
+      const newDataToShow =
+        searchQuery.length || filteredUsers.length > 0 ? updatedFilteredUsers : updatedUsers;
+      const newSlicedData = newDataToShow.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+      setSlicedData(newSlicedData);
+
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  });
+};
+
 
   // Arama sorgusu girilmişse filtrelenmiş veriyi, girilmemişse tüm veriyi göster
   const dataToShow =
