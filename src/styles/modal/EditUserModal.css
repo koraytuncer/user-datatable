@@ -102,3 +102,32 @@
     font-weight: 500 !important;
     text-align: left !important;
 }
+
+.userEditButton{
+    width: 156px;
+    height: 40px;
+    padding: 12px 20px 12px 15px;
+    background-color: var(--primary-color) !important;
+}
+
+.userEditDisabledButton{
+    width: 156px;
+    height: 40px;
+    padding: 12px 20px 12px 15px;
+    background-color: #cfcfcf !important;
+}
+.userEditButton .userEditButtonText{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color:#ffffff;
+    text-transform: none;
+}
+
+.userEditDisabledButton .userEditDisabledButtonText{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color:#ffffff;
+    text-transform: none;
+}

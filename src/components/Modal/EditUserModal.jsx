@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { updateData } from "../../services/DataService";
 import { useUsersData } from "../../contexts/users/UsersDataContext";
 import {
@@ -39,7 +39,7 @@ const validationSchema = yup.object({
   role: yup.string("Enter your role").required("role is required"),
 });
 
-export default function EditUserModal({ user,open, handleClose }) {
+export default function EditUserModal({ user, open, handleClose }) {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -60,12 +60,14 @@ export default function EditUserModal({ user,open, handleClose }) {
     onSubmit: (values) => {
       setLoading(true);
 
-      updateData(user.id,values)
+      updateData(user.id, values)
         .then((updatedUser) => {
           setTimeout(() => {
             setLoading(false);
             toast.success("User update successfully!", { theme: "dark" });
-            const updatedUsers = users.map((u) => u.id === user.id ? updatedUser : u);
+            const updatedUsers = users.map((u) =>
+              u.id === user.id ? updatedUser : u
+            );
             setUsers(updatedUsers); // Yeni kullanıcı listesini ayarla
             handleClose();
           }, 2000);
@@ -77,14 +79,8 @@ export default function EditUserModal({ user,open, handleClose }) {
     onReset: () => {
       handleClose();
     },
-    
   });
 
-  useEffect(() => {
-    if (!open) {
-      formik.resetForm(); // Modal kapandığında formu sıfırla
-    }
-  }, [open, formik]);
 
   return (
     <div>
@@ -241,12 +237,19 @@ export default function EditUserModal({ user,open, handleClose }) {
 
             <Box sx={{ position: "absolute", bottom: 18, left: "28%" }}>
               <Button
-                className="userAddButton"
+                className={
+                  loading || !formik.dirty || !formik.isValid
+                    ? "userEditDisabledButton"
+                    : "userEditButton"
+                }
                 type="submit"
-                disabled={loading}
-                startIcon={loading ? <CircularProgress size={20} /> : null}
-              >
-                <Typography className="userAddButtonText">
+                startIcon={loading ? <CircularProgress size={20} /> : null}>
+                <Typography
+                  className={
+                    loading || !formik.dirty || !formik.isValid
+                      ? "userEditDisabledButtonText"
+                      : "userEditButtonText"
+                  }>
                   {loading ? "Loading..." : "Update User"}
                 </Typography>
               </Button>
