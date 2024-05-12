@@ -20,7 +20,6 @@
     border-radius: 8px;
     border: 2px solid rgba(227, 230, 235, 1);
     outline: none !important;
-    opacity: 0px;
     margin-top: 30px;
 }
 .MuiInputBase-input::placeholder{
@@ -48,13 +47,11 @@
     border-radius: 8px;
     border: 2px solid rgba(227, 230, 235, 1);
     outline: none !important;
-    opacity: 0px;
     margin-top: 30px;
 }
 .menuItem{
     width: 292px;
     gap: 0px;
-    opacity: 0px;
     border-bottom: 1px solid rgba(245, 245, 247, 1) !important;
     margin: 0px !important;
     font-family: 'Montserrat', sans-serif !important;
