@@ -15,7 +15,6 @@ export const fetchData = async () => {
 }
 
 export const postData = async (data) => {
-  console.log('data:', data)
   try {
     const response = await axios.post(`${API_URL}users`, data);
     return response.data;
