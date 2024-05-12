@@ -1,15 +1,23 @@
 import { useState } from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import FormControl from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
-import InputLabel from "@mui/material/InputLabel";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import FormHelperText from "@mui/material/FormHelperText";
+import { postData } from "../../services/DataService";
+import { useUsersData } from "../../contexts/users/UsersDataContext";
+import {
+  Box,
+  Modal,
+  FormControl,
+  OutlinedInput,
+  Select,
+  MenuItem,
+  Avatar,
+  InputLabel,
+  Typography,
+  Button,
+  IconButton,
+  FormHelperText,
+  CircularProgress,
+} from "@mui/material";
+import { toast } from "react-toastify";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import "../../styles/modal/UserModal.css";
@@ -22,38 +30,51 @@ import avatar5 from "../../assets/images/avatar/5.png";
 import avatar6 from "../../assets/images/avatar/6.png";
 
 const validationSchema = yup.object({
-  fullname: yup
-    .string("Enter your email")
-    .required("fullname is required"),
-    username: yup
-    .string("Enter your email")
-    .required("username is required"),
-    email: yup
+  name: yup.string("Enter your name").required("name is required"),
+  username: yup.string("Enter your username").required("username is required"),
+  email: yup
     .string("Enter your email")
     .email("Enter a valid email")
     .required("Email is required"),
-  role: yup
-    .string("Enter your password")
-    .required("role is required"),
+  role: yup.string("Enter your role").required("role is required"),
 });
 
 export default function UserModal({ open, handleClose }) {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  const { users, setUsers } = useUsersData();
 
   const userAvatars = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 
   const formik = useFormik({
     initialValues: {
-      fullname: "",
+      name: "",
       username: "",
       email: "",
       role: "",
-      avatar:"",
+      avatar: "",
+      is_active: true,
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      setLoading(true);
+
+      postData(values)
+        .then(() => {
+          setTimeout(() => {
+            setLoading(false);
+            toast.success("User add successfully!", { theme: "dark" });
+            setUsers([...users, values]);
+            handleClose();
+          }, 2000);
+        })
+        .catch(() => {
+          toast.error("User add error.", { theme: "dark" });
+        });
+    },
+    onReset: () => {
+      handleClose();
     },
   });
 
@@ -67,23 +88,40 @@ export default function UserModal({ open, handleClose }) {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box className="userModal">
+          <IconButton
+            aria-label="close"
+            onClick={formik.handleReset}
+            sx={{ position: "absolute", right: 0, top: 0 }}
+          >
+            <IoCloseCircleOutline size={30} color={"var(--primary-color)"} />
+          </IconButton>
           <form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
-            <FormControl sx={{ width: "100%" }} error={Boolean(formik.errors.fullname && formik.touched.fullname)}>
+            <FormControl
+              sx={{ width: "100%" }}
+              error={Boolean(formik.errors.name && formik.touched.name)}
+            >
               <OutlinedInput
                 placeholder="Full Name"
-                value={formik.values.fullname}
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.email && Boolean(formik.errors.email)}
-                id="fullname"
-                name="fullname"
+                id="name"
+                name="name"
                 className="InputField"
               />
-              {formik.touched.fullname && formik.errors.fullname && <FormHelperText>{formik.errors.fullname}</FormHelperText>}
-            
+
+              {formik.touched.name && formik.errors.name && (
+                <FormHelperText className="formHelperText">
+                  {formik.errors.name}
+                </FormHelperText>
+              )}
             </FormControl>
 
-            <FormControl sx={{ width: "100%" }} error={Boolean(formik.errors.username && formik.touched.username)}>
+            <FormControl
+              sx={{ width: "100%" }}
+              error={Boolean(formik.errors.username && formik.touched.username)}
+            >
               <OutlinedInput
                 placeholder="User Name"
                 value={formik.values.username}
@@ -94,11 +132,17 @@ export default function UserModal({ open, handleClose }) {
                 name="username"
                 className="InputField"
               />
-               {formik.touched.username && formik.errors.username && <FormHelperText>{formik.errors.username}</FormHelperText>}
-
+              {formik.touched.username && formik.errors.username && (
+                <FormHelperText className="formHelperText">
+                  {formik.errors.username}
+                </FormHelperText>
+              )}
             </FormControl>
 
-            <FormControl sx={{ width: "100%" }}  error={Boolean(formik.errors.email && formik.touched.email)}>
+            <FormControl
+              sx={{ width: "100%" }}
+              error={Boolean(formik.errors.email && formik.touched.email)}
+            >
               <OutlinedInput
                 placeholder="Email Address"
                 value={formik.values.email}
@@ -110,11 +154,17 @@ export default function UserModal({ open, handleClose }) {
                 className="InputField"
               />
 
-            {formik.touched.email && formik.errors.email && <FormHelperText>{formik.errors.email}</FormHelperText>}
-
+              {formik.touched.email && formik.errors.email && (
+                <FormHelperText className="formHelperText">
+                  {formik.errors.email}
+                </FormHelperText>
+              )}
             </FormControl>
 
-            <FormControl sx={{ width: "100%" }} error={Boolean(formik.errors.role && formik.touched.role)}>
+            <FormControl
+              sx={{ width: "100%" }}
+              error={Boolean(formik.errors.role && formik.touched.role)}
+            >
               <Select
                 className="InputSelect"
                 value={formik.values.role}
@@ -145,8 +195,9 @@ export default function UserModal({ open, handleClose }) {
                   Subscriber
                 </MenuItem>
               </Select>
-              {formik.touched.role && formik.errors.role && <FormHelperText>{formik.errors.role}</FormHelperText>}
-
+              {formik.touched.role && formik.errors.role && (
+                <FormHelperText>{formik.errors.role}</FormHelperText>
+              )}
             </FormControl>
 
             <Box
@@ -163,7 +214,7 @@ export default function UserModal({ open, handleClose }) {
                       width: 40,
                       marginRight: "10px",
                       boxShadow:
-                        selectedAvatar === index
+                        selectedAvatar === item
                           ? "0 0 10px rgba(0,0,255,0.5)"
                           : "",
                       cursor: "pointer",
@@ -172,7 +223,7 @@ export default function UserModal({ open, handleClose }) {
                     src={item}
                     alt={`Avatar ${index + 1}`}
                     onClick={() => {
-                      formik.setFieldValue('avatar', item);
+                      formik.setFieldValue("avatar", item);
                       setSelectedAvatar(item);
                     }}
                   />
@@ -181,9 +232,14 @@ export default function UserModal({ open, handleClose }) {
             </Box>
 
             <Box sx={{ position: "absolute", bottom: 18, left: "28%" }}>
-              <Button className="userAddButton" type="submit">
+              <Button
+                className="userAddButton"
+                type="submit"
+                disabled={loading}
+                startIcon={loading ? <CircularProgress size={20} /> : null}
+              >
                 <Typography className="userAddButtonText">
-                  Create User
+                  {loading ? "Loading..." : "Create User"}
                 </Typography>
               </Button>
             </Box>

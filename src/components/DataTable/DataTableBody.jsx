@@ -21,7 +21,7 @@ const DataTableBody = () => {
   const { users, setUsers, filteredUsers, searchQuery } = useUsersData();
   const { selectedUsers, setSelectedUsers } = useUserSelection();
 
-  const { open,handleOpen, handleClose } = useModal();
+  const { open, handleClose } = useModal();
 
   const handleCheckboxClick = (user) => {
     setSelectedUsers(

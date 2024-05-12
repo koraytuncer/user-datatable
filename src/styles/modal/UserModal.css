@@ -95,3 +95,10 @@
     color: rgba(130, 134, 140, 1) !important;
 
 }
+
+.formHelperText{
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+}
