@@ -64,26 +64,21 @@ const DataTableHeader = () => {
   };
 
   const handleDeleteAllUsers = (selectedUsers) => {
+    
     confirmDelete(selectedUsers, async () => {
       try {
         // Silme işlemi için tüm seçilen kullanıcılar üzerinde döngü
-        for (let user of selectedUsers) {
-          await deleteData(user.id);
+        for (let userId of selectedUsers) {
+          await deleteData(userId);
         }
-        // Silme işlemi tamamlandıktan sonra kullanıcı listesini güncelle
-        const updatedUsers = users.filter(
-          (user) =>
-            !selectedUsers.some((selectedUser) => selectedUser.id === user.id)
-        );
-        setUsers(updatedUsers); // Kullanıcı listesi state'ini güncelle
+        // Kullanıcı silme işlemi sonrası kullanıcı listesini güncelleme
+        const updatedUsers = users.filter(user => !selectedUsers.includes(user.id));
+        setUsers(updatedUsers);
 
-        // Eğer filtreden geçirilmiş liste varsa ve bu listeden silme yapıldıysa, filtreden geçirilmiş listeyi de güncelle
+        // Filtrelenmiş kullanıcı listesi güncellemesi
         if (filteredUsers.length > 0) {
-          const updatedFilteredUsers = filteredUsers.filter(
-            (user) =>
-              !selectedUsers.some((selectedUser) => selectedUser.id === user.id)
-          );
-          setFilteredUsers(updatedFilteredUsers); // Filtreden geçirilmiş kullanıcı listesi state'ini güncelle
+          const updatedFilteredUsers = filteredUsers.filter(user => !selectedUsers.includes(user.id));
+          setFilteredUsers(updatedFilteredUsers);
         }
 
         setSelectedUsers([]); // Seçili kullanıcıları temizle
