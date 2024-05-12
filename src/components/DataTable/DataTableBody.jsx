@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import { useUsersData } from "../../contexts/users/UsersDataContext";
 import { useUserSelection } from "../../contexts/users/UserSelectionContext";
 import {
@@ -15,11 +15,15 @@ import { confirmDelete } from "../../utils/alert";
 import { deleteData } from "../../services/DataService";
 import { useModal } from '../../contexts/modal/ModalContext';
 import AddUserModal from "../Modal/AddUserModal";
+import EditUserModal from "../Modal/EditUserModal";
 import "../../styles/datatable/DataTableBody.css";
 
 const DataTableBody = () => {
   const { users, setUsers, filteredUsers, searchQuery } = useUsersData();
   const { selectedUsers, setSelectedUsers } = useUserSelection();
+
+  //Kullanıcı düzenleme işlemi için oluşturuldu
+  const [ editingUser, setEditingUser] = useState(null);
 
   const { open, handleClose } = useModal();
 
@@ -49,6 +53,15 @@ const DataTableBody = () => {
   const dataToShow =
     searchQuery.length || filteredUsers.length > 0 ? filteredUsers : users;
 
+
+    const openEditModal = (user) => {
+      setEditingUser(user); // Düzenlenecek kullanıcıyı set et
+    };
+
+    const closeEditModal = () => {
+      setEditingUser(null); // Modal kapandığında kullanıcıyı sıfırla
+    };
+
   return (
     <>
 
@@ -73,9 +86,12 @@ const DataTableBody = () => {
             <TableCell align="left">{user.name}</TableCell>
             <TableCell align="left">{user.username}</TableCell>
             <TableCell align="left">{user.email}</TableCell>
-            <TableCell align="left">{user.roles}</TableCell>
+            <TableCell align="left">{user.role}</TableCell>
             <TableCell align="left">
-              <EditIcon className="actionIcon" />
+              <EditIcon 
+              className="actionIcon"
+              onClick={() => openEditModal(user)}
+              />
               <DeleteIcon
                 className="actionIcon"
                 onClick={() => handleDelete(user.id)}
@@ -96,7 +112,14 @@ const DataTableBody = () => {
         </TableRow>
       )}
     </TableBody>
-    <AddUserModal open={open} handleClose={handleClose} />
+    <AddUserModal open={open} handleClose={handleClose} user={editingUser} />
+    {editingUser && (
+        <EditUserModal
+          user={editingUser}
+          open={Boolean(editingUser)}
+          handleClose={closeEditModal}
+        />
+      )}
     </>
   );
 };

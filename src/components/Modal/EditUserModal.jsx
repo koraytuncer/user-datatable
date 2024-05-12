@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { postData } from "../../services/DataService";
+import { useState,useEffect } from "react";
+import { updateData } from "../../services/DataService";
 import { useUsersData } from "../../contexts/users/UsersDataContext";
 import {
   Box,
@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import "../../styles/modal/AddUserModal.css";
+import "../../styles/modal/EditUserModal.css";
 
 import avatar1 from "../../assets/images/avatar/1.png";
 import avatar2 from "../../assets/images/avatar/2.png";
@@ -39,7 +39,7 @@ const validationSchema = yup.object({
   role: yup.string("Enter your role").required("role is required"),
 });
 
-export default function AddUserModal({ open, handleClose }) {
+export default function EditUserModal({ user,open, handleClose }) {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -49,34 +49,42 @@ export default function AddUserModal({ open, handleClose }) {
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      username: "",
-      email: "",
-      role: "",
-      avatar: "",
-      is_active: true,
+      name: user ? user.name : "",
+      username: user ? user.username : "",
+      email: user ? user.email : "",
+      role: user ? user.role : "",
+      avatar: user ? user.avatar : "",
     },
+    enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       setLoading(true);
 
-      postData(values)
-        .then(() => {
+      updateData(user.id,values)
+        .then((updatedUser) => {
           setTimeout(() => {
             setLoading(false);
-            toast.success("User add successfully!", { theme: "dark" });
-            setUsers([...users, values]);
+            toast.success("User update successfully!", { theme: "dark" });
+            const updatedUsers = users.map((u) => u.id === user.id ? updatedUser : u);
+            setUsers(updatedUsers); // Yeni kullanıcı listesini ayarla
             handleClose();
           }, 2000);
         })
         .catch(() => {
-          toast.error("User add error.", { theme: "dark" });
+          toast.error("User update error.", { theme: "dark" });
         });
     },
     onReset: () => {
       handleClose();
     },
+    
   });
+
+  useEffect(() => {
+    if (!open) {
+      formik.resetForm(); // Modal kapandığında formu sıfırla
+    }
+  }, [open, formik]);
 
   return (
     <div>
@@ -87,7 +95,7 @@ export default function AddUserModal({ open, handleClose }) {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box className="AddUserModal">
+        <Box className="EditUserModal">
           <IconButton
             aria-label="close"
             onClick={formik.handleReset}
@@ -239,7 +247,7 @@ export default function AddUserModal({ open, handleClose }) {
                 startIcon={loading ? <CircularProgress size={20} /> : null}
               >
                 <Typography className="userAddButtonText">
-                  {loading ? "Loading..." : "Create User"}
+                  {loading ? "Loading..." : "Update User"}
                 </Typography>
               </Button>
             </Box>

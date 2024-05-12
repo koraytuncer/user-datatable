@@ -1,0 +1,104 @@
+.EditUserModal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 356px;
+    height: 556px;
+    background-color: #FFFFFF;
+    border: 1px solid #E3E6EB;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px 5px rgba(40, 41, 61, 0.08) ;
+    padding: 32px;
+}
+
+.InputField{
+    width: 292px;
+    height: 36px;
+    padding: 10px 10px 10px 10px;
+    gap: 10px;
+    border-radius: 8px;
+    border: 2px solid rgba(227, 230, 235, 1);
+    outline: none !important;
+    opacity: 0px;
+    margin-top: 30px;
+}
+.MuiInputBase-input::placeholder{
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 15.85px !important;
+    text-align: left !important;
+    color: rgba(130, 134, 140, 1) !important;
+    
+}
+
+.MuiOutlinedInput-notchedOutline{
+    border: none !important;
+}
+
+.InputSelect{
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 13px !important;
+    font-weight: 500 !important;
+    width: 292px;
+    height: 36px;
+    padding: 10px 10px 10px 10px;
+    gap: 10px;
+    border-radius: 8px;
+    border: 2px solid rgba(227, 230, 235, 1);
+    outline: none !important;
+    opacity: 0px;
+    margin-top: 30px;
+}
+.menuItem{
+    width: 292px;
+    gap: 0px;
+    opacity: 0px;
+    border-bottom: 1px solid rgba(245, 245, 247, 1) !important;
+    margin: 0px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+    color: rgba(58, 60, 64, 1) !important;
+}
+.Mui-selected{
+
+    color: rgb(0, 77, 230) !important;
+}
+
+.selectPlaceHolder{
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 15.85px !important;
+    text-align: left !important;
+    color: rgb(198, 201, 206) !important;
+}
+.avatarContainer{
+    flex-direction: column  !important;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px !important;
+}
+
+.avatarLabel{
+    margin-top: -35px !important;
+    padding: 0px !important;
+    margin-bottom: 10px !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 15.85px !important;
+    color: rgba(130, 134, 140, 1) !important;
+
+}
+
+.formHelperText{
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+}
