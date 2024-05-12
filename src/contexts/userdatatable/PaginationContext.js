@@ -9,7 +9,7 @@ export const PaginationProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [slicedData, setSlicedData] = useState([]);
 
-  const rowsPerPage = 2;
+  const rowsPerPage = 5;
 
   const value = { currentPage, setCurrentPage, slicedData, setSlicedData,rowsPerPage };
 
