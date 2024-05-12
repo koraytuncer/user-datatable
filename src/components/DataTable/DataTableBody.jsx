@@ -14,7 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { confirmDelete } from "../../utils/alert";
 import { deleteData } from "../../services/DataService";
 import { useModal } from '../../contexts/modal/ModalContext';
-import UserModal from "../Modal/UserModal";
+import AddUserModal from "../Modal/AddUserModal";
 import "../../styles/datatable/DataTableBody.css";
 
 const DataTableBody = () => {
@@ -96,7 +96,7 @@ const DataTableBody = () => {
         </TableRow>
       )}
     </TableBody>
-    <UserModal open={open} handleClose={handleClose} />
+    <AddUserModal open={open} handleClose={handleClose} />
     </>
   );
 };

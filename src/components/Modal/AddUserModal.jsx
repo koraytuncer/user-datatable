@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import "../../styles/modal/UserModal.css";
+import "../../styles/modal/AddUserModal.css";
 
 import avatar1 from "../../assets/images/avatar/1.png";
 import avatar2 from "../../assets/images/avatar/2.png";
@@ -39,7 +39,7 @@ const validationSchema = yup.object({
   role: yup.string("Enter your role").required("role is required"),
 });
 
-export default function UserModal({ open, handleClose }) {
+export default function AddUserModal({ open, handleClose }) {
   const [selectedAvatar, setSelectedAvatar] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -87,7 +87,7 @@ export default function UserModal({ open, handleClose }) {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box className="userModal">
+        <Box className="AddUserModal">
           <IconButton
             aria-label="close"
             onClick={formik.handleReset}
