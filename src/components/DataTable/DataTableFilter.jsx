@@ -36,6 +36,7 @@ const DataTableFilters = () => {
 
     // Filtrelenmiş veri boş ise uyarı mesajı göster
     if (filteredData.length === 0) {
+      setActiveIndex(0)
       toast.info("No users found for the selected role.", { theme: "colored" });
     }
   };
