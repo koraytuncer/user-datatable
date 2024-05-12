@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useUsersData } from "../../contexts/userdatatable/UsersDataContext";
 import { useUserSelection } from "../../contexts/userdatatable/UserSelectionContext";
 import { useModal } from "../../contexts/modal/ModalContext";
@@ -18,7 +18,7 @@ import "../../styles/datatable/DataTableFilter.css";
 
 const DataTableFilters = () => {
   const { users, setFilteredUsers } = useUsersData();
-  const { setFilterRole } = useUserSelection();
+  const { setFilterRole,filterRole,setSelectedUsers } = useUserSelection();
   const [activeIndex, setActiveIndex] = useState(0);
 
   const { handleOpen } = useModal();
@@ -40,6 +40,10 @@ const DataTableFilters = () => {
       toast.info("No users found for the selected role.", { theme: "colored" });
     }
   };
+
+      useEffect(() => {
+        setSelectedUsers([]); // Rol değişikliğinde seçimleri sıfırla
+      }, [filterRole]);
 
   const filterName = [
     "All Users",

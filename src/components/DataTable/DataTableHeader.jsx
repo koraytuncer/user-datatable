@@ -1,5 +1,6 @@
 import { useUsersData } from "../../contexts/userdatatable/UsersDataContext";
 import { useUserSelection } from "../../contexts/userdatatable/UserSelectionContext";
+import { usePagination } from '../../contexts/userdatatable/PaginationContext';
 import { deleteData } from "../../services/DataService";
 import {
   TableHead,
@@ -24,11 +25,11 @@ const DataTableHeader = () => {
     filteredUsers,
     searchQuery,
     setSearchQuery,
-    setFilteredUsers,
-    setCurrentPage,
+    setFilteredUsers
   } = useUsersData();
 
   const { selectedUsers, setSelectedUsers, filterRole } = useUserSelection();
+  const { slicedData,setCurrentPage } = usePagination();
 
   const handleSearchChange = (event) => {
     const value = event.target.value.trim();
@@ -53,11 +54,12 @@ const DataTableHeader = () => {
   };
 
   const toggleSelectAll = () => {
-    const currentList = filteredUsers.length > 0 ? filteredUsers : users; // Arama yapıldıysa filteredUsers, yoksa users kullanılacak
-    if (selectedUsers.length === currentList.length) {
-      setSelectedUsers([]); // Eğer şu anki liste tamamen seçiliyse, tüm seçimleri kaldır
+    const currentIds = slicedData.map(user => user.id);
+    if (selectedUsers.length === currentIds.length) {
+      setSelectedUsers(selectedUsers.filter(id => !currentIds.includes(id))); // Eğer tüm sayfa seçiliyse, bu sayfadakileri kaldır
     } else {
-      setSelectedUsers(currentList); // Eğer tamamen seçili değilse, şu anki listeyi tamamen seç
+      const newSelectedUsers = [...new Set([...selectedUsers, ...currentIds])]; // Yeni seçilenleri ekleyerek güncelle
+      setSelectedUsers(newSelectedUsers);
     }
   };
 
@@ -152,19 +154,14 @@ const DataTableHeader = () => {
         </TableRow>
         <TableRow sx={{ border: "none" }}>
           <TableCell padding="checkbox" className="datatableCell">
-            <Checkbox
-              className="checkBox"
-              checked={
-                selectedUsers.length ===
-                (searchQuery.length > 0 ? filteredUsers.length : users.length)
-              }
-              indeterminate={
-                selectedUsers.length > 0 &&
-                selectedUsers.length <
-                  (searchQuery.length > 0 ? filteredUsers.length : users.length)
-              }
-              onChange={toggleSelectAll}
-            />
+          <Checkbox
+            checked={slicedData.every(user => selectedUsers.includes(user.id))}
+            indeterminate={
+              slicedData.some(user => selectedUsers.includes(user.id)) &&
+              !slicedData.every(user => selectedUsers.includes(user.id))
+            }
+            onChange={toggleSelectAll}
+          />
           </TableCell>
           {headerItems.map(({ label, width }) => (
             <TableCell

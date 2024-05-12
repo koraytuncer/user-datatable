@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useUsersData } from "../../contexts/userdatatable/UsersDataContext";
 import { useUserSelection } from "../../contexts/userdatatable/UserSelectionContext";
+import { usePagination } from '../../contexts/userdatatable/PaginationContext';
 import {
   TableBody,
   TableRow,
@@ -23,25 +24,23 @@ const DataTableBody = () => {
     users,
     setUsers,
     filteredUsers,
-    searchQuery,
-    currentPage,
-    rowsPerPage,
+    searchQuery
   } = useUsersData();
 
   const { selectedUsers, setSelectedUsers } = useUserSelection();
+  const { slicedData,setSlicedData, currentPage,rowsPerPage } = usePagination();
 
   //Kullanıcı düzenleme işlemi için oluşturuldu
   const [editingUser, setEditingUser] = useState(null);
 
   const { open, handleClose } = useModal();
 
-  const handleCheckboxClick = (user) => {
-    setSelectedUsers(
-      (prevUsers) =>
-        selectedUsers.some((u) => u.id === user.id) // Kullanıcı zaten seçili mi?
-          ? prevUsers.filter((u) => u.id !== user.id) // Eğer kullanıcı zaten seçiliyse, seçimini kaldır
-          : [...prevUsers, user] // Eğer kullanıcı henüz seçilmemişse, diziye ekle
-    );
+  const handleCheckboxClick = (userId) => {
+    // Mevcut seçili kullanıcıları kontrol et
+    const newSelectedUsers = selectedUsers.includes(userId)
+      ? selectedUsers.filter(id => id !== userId) // Eğer zaten seçili ise çıkar
+      : [...selectedUsers, userId]; // Eğer seçili değilse ekle
+    setSelectedUsers(newSelectedUsers);
   };
 
   // Kullanıcıyı silme işlemi
@@ -61,9 +60,10 @@ const DataTableBody = () => {
   const dataToShow =
     searchQuery.length || filteredUsers.length > 0 ? filteredUsers : users;
 
-  // Sayfaya göre kullanıcıları filtrele
-  const slicedData = dataToShow.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
-
+    useEffect(() => {
+      const newSlicedData = dataToShow.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+      setSlicedData(newSlicedData);
+    }, [currentPage, dataToShow, setSlicedData]);
 
   const openEditModal = (user) => {
     setEditingUser(user); // Düzenlenecek kullanıcıyı set et
@@ -73,6 +73,11 @@ const DataTableBody = () => {
     setEditingUser(null); // Modal kapandığında kullanıcıyı sıfırla
   };
 
+    // Sayfa değiştiğinde seçili kullanıcıları temizle
+    useEffect(() => {
+      setSelectedUsers([]); // Sayfa değişikliğinde seçimleri sıfırla
+    }, [currentPage, setSelectedUsers]);
+
   return (
     <>
       <TableBody>
@@ -80,11 +85,10 @@ const DataTableBody = () => {
           slicedData.map((user) => (
             <TableRow key={user.id}>
               <TableCell align="left" component="th" scope="user">
-                <Checkbox
-                  className="checkBox"
-                  checked={selectedUsers.some((u) => u.id === user.id)}
-                  onClick={() => handleCheckboxClick(user)}
-                />
+              <Checkbox
+              checked={selectedUsers.includes(user.id)} // Bu kullanıcı zaten seçili mi kontrol et
+              onChange={() => handleCheckboxClick(user.id)} // Checkbox tıklama işlemi
+            />
               </TableCell>
               <TableCell align="left">
                 <Avatar

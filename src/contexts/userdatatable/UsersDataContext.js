@@ -9,8 +9,7 @@ export const UsersDataProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 5;
+
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -30,10 +29,7 @@ export const UsersDataProvider = ({ children }) => {
     filteredUsers,
     setFilteredUsers,
     searchQuery,
-    setSearchQuery,
-    currentPage,
-    setCurrentPage,
-    rowsPerPage,
+    setSearchQuery
   };
 
   return (
