@@ -237,11 +237,13 @@ export default function UpdateUserModal({ user, open, handleClose }) {
 
             <Box sx={{ position: "absolute", bottom: 18, left: "28%" }}>
               <Button
-                className={
-                  loading || !formik.dirty || !formik.isValid
-                    ? "userEditDisabledButton"
-                    : "userEditButton"
-                }
+                // className={
+                //   loading || !formik.dirty || !formik.isValid
+                //     ? "userEditDisabledButton"
+                //     : "userEditButton"
+                // }
+                className={loading || !formik.dirty || !formik.isValid ? "userEditDisabledButton" : "userEditButton"}
+                disabled={loading || !formik.dirty || !formik.isValid}
                 type="submit"
                 startIcon={loading ? <CircularProgress size={20} /> : null}>
                 <Typography

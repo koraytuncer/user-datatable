@@ -196,7 +196,7 @@ export default function AddUserModal({ open, handleClose }) {
                 </MenuItem>
               </Select>
               {formik.touched.role && formik.errors.role && (
-                <FormHelperText>{formik.errors.role}</FormHelperText>
+                <FormHelperText className="formHelperText">{formik.errors.role}</FormHelperText>
               )}
             </FormControl>
 
